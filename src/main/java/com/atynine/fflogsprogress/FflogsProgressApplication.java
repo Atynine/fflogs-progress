@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+
 @SpringBootApplication
 @RestController
 public class FflogsProgressApplication {
@@ -31,6 +33,7 @@ public class FflogsProgressApplication {
 		if(reportRepo.existsById(report.getCode())){
 			reportRepo.save(report);
 		}
+		updateFightStartAndEndTimeForReport(report);
 		return report;
 	}
 
@@ -45,5 +48,13 @@ public class FflogsProgressApplication {
 		if(!guildRepo.existsById(guild.getId())){
 			report.setGuild(guildRepo.save(guild));
 		}
+	}
+
+	private void updateFightStartAndEndTimeForReport(Report report){
+		Timestamp reportStartTime = report.getStartTime();
+		report.getFights().forEach(fight -> {
+			fight.setStartTimestamp(new Timestamp((long) (reportStartTime.getTime() + fight.getStartTime())));
+			fight.setEndTimestamp(new Timestamp((long) (reportStartTime.getTime() + fight.getEndTime())));
+		});
 	}
 }

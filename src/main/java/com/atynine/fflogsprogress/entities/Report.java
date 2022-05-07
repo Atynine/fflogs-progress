@@ -10,11 +10,11 @@ import java.util.Set;
 @Data
 public class Report {
 	@Id
-	public String code;
-	public Timestamp startTime;
-	public Timestamp endTime;
+	private String code;
+	private Timestamp startTime;
+	private Timestamp endTime;
 	@ManyToOne(cascade = {CascadeType.ALL})
-	public Guild guild;
+	private Guild guild;
 	@OneToMany(cascade = {CascadeType.ALL})
-	public Set<Fight> fights;
+	private Set<Fight> fights;
 }
