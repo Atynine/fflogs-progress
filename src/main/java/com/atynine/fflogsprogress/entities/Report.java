@@ -13,8 +13,12 @@ public class Report {
 	private String code;
 	private Timestamp startTime;
 	private Timestamp endTime;
-	@ManyToOne(cascade = {CascadeType.ALL})
-	private Guild guild;
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Set<Fight> fights;
+	@ManyToOne(cascade = {CascadeType.ALL})
+	private Guild guild;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	private Set<Player> players;
+	@Transient
+	private MasterData masterData;
 }
