@@ -1,5 +1,6 @@
 package com.atynine.fflogsprogress.services.impl;
 
+import com.atynine.fflogsprogress.entities.Guild;
 import com.atynine.fflogsprogress.entities.Player;
 import com.atynine.fflogsprogress.entities.Report;
 import com.atynine.fflogsprogress.repositories.ReportRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -28,7 +30,7 @@ public class ReportServiceImpl implements ReportService {
 		if(report == null) return null;
 		if(report.getGuild() != null) guildService.save(report.getGuild());
 		filterFights(report);
-		updateFightStartAndEndTimeForReport(report);
+		updateFightData(report);
 		retrievePlayerData(report);
 		return reportRepo.save(report);
 	}
@@ -43,11 +45,22 @@ public class ReportServiceImpl implements ReportService {
 		return reportRepo.existsById(id);
 	}
 
-	private void updateFightStartAndEndTimeForReport(Report report){
+	@Override
+	public Set<Report> fetchRecentReportsByGuildId(Integer guildId) {
+		Guild guild = guildService.fetchById(guildId);
+		if(guild == null) return new HashSet<>();
+		return reportRepo.findTop5ReportByGuildOrderByEndTimeAsc(guild);
+	}
+
+	private void updateFightData(Report report){
 		Timestamp reportStartTime = report.getStartTime();
 		report.getFights().forEach(fight -> {
 			fight.setStartTimestamp(new Timestamp((long) (reportStartTime.getTime() + fight.getStartTime())));
 			fight.setEndTimestamp(new Timestamp((long) (reportStartTime.getTime() + fight.getEndTime())));
+			fight.setReportCode(report.getCode());
+			if(report.getGuild() != null){
+				fight.setGuildID(report.getGuild().getId());
+			}
 		});
 	}
 

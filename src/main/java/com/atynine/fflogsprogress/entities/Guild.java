@@ -13,6 +13,6 @@ public class Guild {
 	@Id
 	private Integer id;
 	private String name;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Server server;
 }

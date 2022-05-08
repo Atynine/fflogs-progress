@@ -29,4 +29,6 @@ public class Fight {
 	private Boolean standardComposition;
 	@JsonProperty("kill")
 	private Boolean wasKilled;
+	private Integer guildID;
+	private String reportCode;
 }

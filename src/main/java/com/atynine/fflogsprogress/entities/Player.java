@@ -15,6 +15,6 @@ public class Player {
 	private Integer canonicalID;
 	private Integer lodestoneID;
 	private String name;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Server server;
 }
