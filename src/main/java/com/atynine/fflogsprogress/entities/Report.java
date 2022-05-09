@@ -3,7 +3,6 @@ package com.atynine.fflogsprogress.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -11,8 +10,8 @@ import java.util.Set;
 public class Report {
 	@Id
 	private String code;
-	private Timestamp startTime;
-	private Timestamp endTime;
+	private Long startTime;
+	private Long endTime;
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Set<Fight> fights;
 	@ManyToOne(cascade = {CascadeType.ALL})

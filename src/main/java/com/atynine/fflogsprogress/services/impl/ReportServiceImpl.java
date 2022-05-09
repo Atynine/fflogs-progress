@@ -10,7 +10,6 @@ import com.atynine.fflogsprogress.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,10 +52,10 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	private void updateFightData(Report report){
-		Timestamp reportStartTime = report.getStartTime();
+		Long reportStartTime = report.getStartTime();
 		report.getFights().forEach(fight -> {
-			fight.setStartTimestamp(new Timestamp((long) (reportStartTime.getTime() + fight.getStartTime())));
-			fight.setEndTimestamp(new Timestamp((long) (reportStartTime.getTime() + fight.getEndTime())));
+			fight.setStartTimestamp(reportStartTime + fight.getStartTime());
+			fight.setEndTimestamp(reportStartTime + fight.getEndTime());
 			fight.setReportCode(report.getCode());
 			if(report.getGuild() != null){
 				fight.setGuildID(report.getGuild().getId());

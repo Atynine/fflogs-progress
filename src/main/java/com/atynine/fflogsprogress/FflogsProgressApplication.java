@@ -28,6 +28,8 @@ public class FflogsProgressApplication {
 		Report report = reportWrapper.getReportData().getReport();
 		if(!reportService.existsById(report.getCode())){
 			reportService.save(report);
+		}else{
+			System.out.println("Report already exists");
 		}
 		return report;
 	}

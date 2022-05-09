@@ -20,7 +20,7 @@ public class FightServiceImpl implements FightService {
 
 	@Override
 	public Set<Fight> fetchByGuildIdAndEncounterId(Integer guildId, Integer encounterId) {
-		return fightRepo.findFightByGuildIDAndEncounterIDOrderByStartTimestampDesc(guildId, encounterId);
+		return fightRepo.findFightByGuildIDAndEncounterIDOrderByStartTimestampAsc(guildId, encounterId);
 	}
 
 	@Override

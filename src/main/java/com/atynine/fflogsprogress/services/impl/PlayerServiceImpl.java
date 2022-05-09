@@ -1,12 +1,13 @@
 package com.atynine.fflogsprogress.services.impl;
 
 import com.atynine.fflogsprogress.entities.Player;
-import com.atynine.fflogsprogress.entities.Server;
 import com.atynine.fflogsprogress.repositories.PlayerRepository;
 import com.atynine.fflogsprogress.services.PlayerService;
 import com.atynine.fflogsprogress.services.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -23,7 +24,9 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public Player fetchByNameAndServer(String name, String server) {
-		return playerRepo.findByNameAndServer(name, serverService.fetchByName(server)).get(0);
+		List<Player> players = playerRepo.findByNameAndServer(name, serverService.fetchByName(server));
+		if(players.isEmpty()) return null;
+		return players.get(0);
 	}
 
 	@Override

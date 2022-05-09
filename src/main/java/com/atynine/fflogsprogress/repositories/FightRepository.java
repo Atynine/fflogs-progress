@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Set;
 
 public interface FightRepository extends CrudRepository<Fight, Integer> {
-	Set<Fight> findFightByGuildIDAndEncounterIDOrderByStartTimestampDesc(Integer guildID, Integer encounterID);
+	Set<Fight> findFightByGuildIDAndEncounterIDOrderByStartTimestampAsc(Integer guildID, Integer encounterID);
 }

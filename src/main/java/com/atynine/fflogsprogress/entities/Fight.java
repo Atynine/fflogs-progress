@@ -4,22 +4,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Data
 public class Fight {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty("internalId")
 	private Integer id;
+	@JsonProperty("id")
+	private Integer fflogsId;
 	private String name;
 	private Float bossPercentage;
 	private Boolean completeRaid;
 	private Integer encounterID;
-	private Float startTime;
-	private Timestamp startTimestamp;
-	private Float endTime;
-	private Timestamp endTimestamp;
+	private Long startTime;
+	private Long startTimestamp;
+	private Long endTime;
+	private Long endTimestamp;
 	private Float fightPercentage;
 	private Boolean hasEcho;
 	private Integer lastPhase;
