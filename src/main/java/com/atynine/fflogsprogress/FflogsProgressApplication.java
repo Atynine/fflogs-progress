@@ -40,11 +40,13 @@ public class FflogsProgressApplication {
 		return player;
 	}
 
+	@CrossOrigin
 	@GetMapping(value = "/guild/{guildId}/recent", produces = "application/json")
 	public Set<Report> getGuildRecents(@PathVariable Integer guildId){
 		return reportService.fetchRecentReportsByGuildId(guildId);
 	}
 
+	@CrossOrigin
 	@GetMapping(value = "/guild/{guildId}/encounter/{encounterId}")
 	public Set<Fight> getGuildFightsByEncounter(@PathVariable Integer guildId, @PathVariable Integer encounterId){
 		return fightService.fetchByGuildIdAndEncounterId(guildId, encounterId);
