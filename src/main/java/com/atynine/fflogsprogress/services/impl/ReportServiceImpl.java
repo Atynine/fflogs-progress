@@ -4,6 +4,7 @@ import com.atynine.fflogsprogress.entities.Guild;
 import com.atynine.fflogsprogress.entities.Player;
 import com.atynine.fflogsprogress.entities.Report;
 import com.atynine.fflogsprogress.repositories.ReportRepository;
+import com.atynine.fflogsprogress.services.FightService;
 import com.atynine.fflogsprogress.services.GuildService;
 import com.atynine.fflogsprogress.services.PlayerService;
 import com.atynine.fflogsprogress.services.ReportService;
@@ -23,13 +24,15 @@ public class ReportServiceImpl implements ReportService {
 	GuildService guildService;
 	@Autowired
 	PlayerService playerService;
+	@Autowired
+	FightService fightService;
 
 	@Override
 	public Report save(Report report) {
 		if(report == null) return null;
 		if(report.getGuild() != null) guildService.save(report.getGuild());
-		filterFights(report);
 		updateFightData(report);
+		filterFights(report);
 		retrievePlayerData(report);
 		return reportRepo.save(report);
 	}
@@ -78,6 +81,6 @@ public class ReportServiceImpl implements ReportService {
 
 	private void filterFights(Report report){
 		if(report.getFights() == null) return;
-		report.getFights().removeIf(fight -> (fight.getBossPercentage() == null || fight.getFightPercentage() == null || fight.getSize() == null));
+		report.getFights().removeIf(fight -> (fight.getBossPercentage() == null || fight.getFightPercentage() == null || fight.getSize() == null || fightService.existsByStartTimestampAndEndTimestamp(fight.getStartTimestamp(), fight.getEndTimestamp())));
 	}
 }

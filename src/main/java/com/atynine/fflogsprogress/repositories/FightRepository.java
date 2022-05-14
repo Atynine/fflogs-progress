@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface FightRepository extends CrudRepository<Fight, Integer> {
 	Set<Fight> findFightByGuildIDAndEncounterIDOrderByStartTimestampAsc(Integer guildID, Integer encounterID);
+	boolean existsByStartTimestampAndEndTimestamp(Long startTimestamp, Long endTimestamp);
 }

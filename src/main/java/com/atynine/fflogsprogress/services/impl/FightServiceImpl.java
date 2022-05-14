@@ -15,6 +15,7 @@ public class FightServiceImpl implements FightService {
 
 	@Override
 	public Fight save(Fight fight) {
+		if(this.existsByStartTimestampAndEndTimestamp(fight.getStartTimestamp(), fight.getEndTimestamp())) return fight;
 		return fightRepo.save(fight);
 	}
 
@@ -26,5 +27,10 @@ public class FightServiceImpl implements FightService {
 	@Override
 	public boolean existsById(Integer id) {
 		return fightRepo.existsById(id);
+	}
+
+	@Override
+	public boolean existsByStartTimestampAndEndTimestamp(Long startTimestamp, Long endTimestamp) {
+		return fightRepo.existsByStartTimestampAndEndTimestamp(startTimestamp, endTimestamp);
 	}
 }
